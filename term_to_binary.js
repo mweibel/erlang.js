@@ -80,6 +80,9 @@ var Encoder = function() {
     if((tag === 'pid' || tag === 'p') && valType === 'object')
       return self.pid(val);
 
+    if((tag === 'newRef' || tag === 'r') && valType === 'object')
+      return self.newReference(val);
+
     throw new Error("Unknown tag " + tag.toString() + " for value: " + sys.inspect(val));
   }
 
@@ -111,6 +114,18 @@ var Encoder = function() {
       lib.uint32(x.serial),
       x.creation
     ];
+  }
+
+  self.newReference = function(x) {
+    var result = [
+      lib.tags.NEW_REFERENCE,
+      lib.uint16(x.ids.length),
+      self.encode(x.node),
+      x.creation
+    ];
+    result.push(x.ids.map(function(e) { return lib.uint32(e); }));
+
+    return result;
   }
 
   self.buffer = function(x) {
