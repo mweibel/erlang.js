@@ -80,7 +80,7 @@ var Encoder = function() {
     if((tag === 'pid' || tag === 'p') && valType === 'object')
       return self.pid(val);
 
-    if((tag === 'newRef' || tag === 'r') && valType === 'object')
+    if((tag === 'newReference' || tag === 'r') && valType === 'object')
       return self.newReference(val);
 
     throw new Error("Unknown tag " + tag.toString() + " for value: " + sys.inspect(val));
